@@ -23,6 +23,13 @@ export default {
 }
 </script>
 
-<style>
-	
+<style scoped>
+	.goods {
+		display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: var(--color-background);
+
+    padding: 2px;
+	}
 </style>

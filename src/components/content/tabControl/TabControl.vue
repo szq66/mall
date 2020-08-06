@@ -25,6 +25,7 @@
 		methods: {
 			itemClick(index) {
 				this.currentIndex = index;
+				this.$emit('tabClick', index)
 			}
 		}
 	}
@@ -53,6 +54,6 @@
 	}
 
 	.active span {
-		border-bottom: 3px solid #fb7299;
+		border-bottom: 3px solid var(--color-tint);
 	}
 </style>

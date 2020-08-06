@@ -4,8 +4,8 @@
 		<home-swiper :banners="banners" />
 		<recommend-view :recommends="recommends" />
 		<feature-view />
-		<tab-control :titles="['流行', '新款', '精选']" class="tab-control" />
-		<goods-list :goods="goods['pop'].list" />
+		<tab-control :titles="['流行', '新款', '精选']" class="tab-control" @tabClick="tabClick" />
+		<goods-list :goods="showGoods" />
 		<ul>
 			<li>1</li>
 			<li>1</li>
@@ -80,7 +80,13 @@ export default {
 				'pop': {page: 0, list: []},
 				'new': {page: 0, list: []},
 				'sell': {page: 0, list: []}
-			}
+			},
+			cuttentType: 'pop'
+		}
+  },
+  computed: {
+		showGoods() {
+			return this.goods[this.currentType].list
 		}
   },
   created() {
@@ -90,6 +96,25 @@ export default {
 		this.getHomeGoods('sell')
   },
   methods: {
+		/**
+  	 * 事件监听相关的方法
+  	 */
+		tabClick(index) {
+			switch (index) {
+				case 0:
+				this.currentType = 'pop'
+				break
+				case 1:
+				this.currentType = 'new'
+				break
+				case 2:
+				this.currentType = 'sell'
+				break
+			}
+		},
+		/**
+  	 * 网络请求相关的方法
+  	 */
 		getHomeMultidata() {
 			getHomeMultidata().then(res => {
 				this.banners = res.data.banner.list;
@@ -112,7 +137,7 @@ export default {
 		padding-top: 44px;
 	}
 	.home-nav{
-		background-color: #fb7299;
+		background-color: var(--color-tint);
 		color: #fff;
 		position: fixed;
 		left: 0;
@@ -124,5 +149,6 @@ export default {
 	.tab-control {
 		position: sticky;
 		top: 44px;
+		z-index: 9;
 	}
 </style>
