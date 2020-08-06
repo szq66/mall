@@ -1,7 +1,7 @@
 <template>
-  <div>
-		<img :src="goodsItem.show.image" alt="">
-		<div  class="goods-info">
+  <div class="goods-item">
+		<img :src="goodsItem.show.img" alt="">
+		<div class="goods-info">
 			<p>{{goodsItem.title}}</p>
 			<span class="price">{{goodsItem.price}}</span>
 			<span class="collect">{{goodsItem.cfav}}</span>
@@ -12,17 +12,19 @@
 <script>
 export default {
   name: 'GoodsListItem',
-  goodsItem: {
-	type: Object,
-		default() {
-			return {}
+  props: {
+		goodsItem: {
+			type: Object,
+			default() {
+				return {}
+			}
 		}
-	}
+  }
 }
 </script>
 
 <style scoped>
-.goods-item {
+	.goods-item {
     padding-bottom: 40px;
     position: relative;
 
