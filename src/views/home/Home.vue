@@ -78,7 +78,7 @@ export default {
 		this.getHomeGoods('sell')
   },
   activated() {
-    this.$refs.scroll.scrollTo(0, this.saveY, 0)
+    this.$refs.scroll.scrollTo(0, this.saveY, 100)
     this.$refs.scroll.refresh()
   },
   deactivated() {
