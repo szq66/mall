@@ -1,6 +1,6 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail-nav" />
+    <detail-nav-bar />
     <scroll class="content"
             ref="scroll"
             :probeType="3" @scroll="contentScroll">
@@ -95,12 +95,6 @@
     z-index: 9;
     background-color: #fff;
     height: 100vh;
-  }
-
-  .detail-nav {
-    position: relative;
-    z-index: 9;
-    background-color: #fff;
   }
 
   .content {

@@ -42,8 +42,9 @@
 
 <style scoped>
   .detail-nav {
+    position: relative;
+    z-index: 9;
     background-color: #fff;
-    font-weight: normal;
     height: 44px;
   }
 

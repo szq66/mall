@@ -4,7 +4,7 @@
     <div class="info-price">
       <span class="n-price">{{goods.newPrice}}</span>
       <span class="o-price">{{goods.oldPrice}}</span>
-      <span class="discount" v-if="goods.discount">{{goods.discount}}</span>
+      <span class="discount" v-if="goods.discount" :style="{backgroundColor: goods.discountBgColor}">{{goods.discount}}</span>
     </div>
     <div class="info-other">
       <span>{{goods.columns[0]}}</span>
@@ -60,9 +60,10 @@
     font-size: 12px;
     padding: 2px 5px;
     color: #fff;
-    background-color: var(--color-high-text);
+    /*background-color: var(--color-high-text);*/
     border-radius: 8px;
     margin-left: 5px;
+
     /*让元素上浮一些: 使用相对定位即可*/
     position: relative;
     top: -8px;
