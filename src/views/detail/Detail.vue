@@ -1,13 +1,16 @@
 <template>
   <div id="detail">
     <detail-nav-bar class="detail-nav" />
-    <scroll class="content" ref="scroll">
+    <scroll class="content"
+            ref="scroll"
+            :probeType="3" @scroll="contentScroll">
       <detail-swiper :top-images="topImages" />
       <detail-base-info :goods="goods" />
       <detail-shop-info :shop="shop" />
       <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad" />
       <detail-param-info :param-info="paramInfo" />
     </scroll>
+    <back-top @click.native="backClick" v-show="isShowBackTop" />
   </div>
 </template>
 
@@ -20,6 +23,7 @@
   import DetailParamInfo from "./childComps/DetailParamInfo";
 
   import Scroll from "components/common/scroll/Scroll";
+  import BackTop from "components/content/backtop/BackTop";
 
   import {getDetail, Goods, Shop, GoodsParam} from "network/detail";
 
@@ -32,7 +36,8 @@
       DetailShopInfo,
       Scroll,
       DetailGoodsInfo,
-      DetailParamInfo
+      DetailParamInfo,
+      BackTop
     },
     data() {
       return {
@@ -41,7 +46,8 @@
         goods: {},
         shop: {},
         detailInfo: {},
-        paramInfo: {}
+        paramInfo: {},
+        isShowBackTop: false
       }
     },
     created() {
@@ -70,6 +76,14 @@
     methods: {
       imageLoad() {
         this.$refs.scroll.refresh()
+      },
+      backClick() {
+        // 返回顶部
+        this.$refs.scroll.scrollTo(0, 0)
+      },
+      contentScroll(position) {
+        // 判断是否显示BackTop
+        this.isShowBackTop = (-position.y) > 1000
       }
     }
   }

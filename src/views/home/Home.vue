@@ -10,7 +10,7 @@
             ref="scroll"
             :probe-type="3"
             :pull-up-load="true"
-            @scroll="cotentScroll"
+            @scroll="contentScroll"
             @pullingUp="loadMore">
 			<home-swiper :banners="banners" @swiperImageLoad="swiperImageLoad" />
 			<recommend-view :recommends="recommends" />
@@ -111,9 +111,10 @@ export default {
       this.$refs.tabControl2  .currentIndex = index
     },
     backClick() {
+      // 返回顶部
       this.$refs.scroll.scrollTo(0, 0)
     },
-    cotentScroll(position) {
+    contentScroll(position) {
       // 判断BackTop是否显示
       this.isShowBackTop = (-position.y) > 1000
 
