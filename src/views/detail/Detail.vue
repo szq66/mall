@@ -1,6 +1,6 @@
 <template>
   <div id="detail">
-    <detail-nav-bar @titleClick="titleClick" />
+    <detail-nav-bar @titleClick="titleClick" ref="navbar" />
     <scroll class="content"
             ref="scroll"
             :probeType="3" @scroll="contentScroll">
@@ -13,6 +13,7 @@
       <detail-recommend-info ref="recommend" :recommends="recommends" />
     </scroll>
     <back-top @click.native="backClick" v-show="isShowBackTop" />
+    <detail-bottom-bar />
   </div>
 </template>
 
@@ -25,6 +26,7 @@
   import DetailParamInfo from "./childComps/DetailParamInfo";
   import DetailCommentInfo from "./childComps/DetailCommentInfo";
   import DetailRecommendInfo from "./childComps/DetailRecommendInfo";
+  import DetailBottomBar from "./childComps/DetailBottomBar";
 
   import Scroll from "components/common/scroll/Scroll";
   import BackTop from "components/content/backtop/BackTop";
@@ -44,6 +46,7 @@
       DetailParamInfo,
       DetailCommentInfo,
       DetailRecommendInfo,
+      DetailBottomBar,
       BackTop
     },
     data() {
@@ -58,6 +61,7 @@
         recommends: [],
         themeTopYs: [],
         getThemeTopY: null,
+        currentIndex: 0,
         isShowBackTop: false
       }
     },
@@ -99,6 +103,7 @@
         this.themeTopYs.push(this.$refs.params.$el.offsetTop -44)
         this.themeTopYs.push(this.$refs.comment.$el.offsetTop -44)
         this.themeTopYs.push(this.$refs.recommend.$el.offsetTop -44)
+        this.themeTopYs.push(Number.MAX_VALUE)
       }, 100)
     },
     methods: {
@@ -115,6 +120,15 @@
         this.$refs.scroll.scrollTo(0, 0)
       },
       contentScroll(position) {
+        let positionY = -position.y
+        let length = this.themeTopYs.length
+        for (let i = 0; i < length - 1; i ++) {
+          if (this.currentIndex !==i && (positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i + 1])) {
+            this.currentIndex = i
+            this.$refs.navbar.currentIndex = this.currentIndex
+          }
+        }
+
         // 判断是否显示BackTop
         this.isShowBackTop = (-position.y) > 1000
       }
