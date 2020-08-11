@@ -25,7 +25,7 @@ export class Goods {
     this.discountBgColor = itemInfo.discountBgColor
     this.columns = columns
     this.services = services
-    this.nowPrice = itemInfo.highNowPrice
+    this.realPrice = itemInfo.lowNowPrice
   }
 }
 

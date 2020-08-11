@@ -12,8 +12,8 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo" />
       <detail-recommend-info ref="recommend" :recommends="recommends" />
     </scroll>
-    <back-top @click.native="backClick" v-show="isShowBackTop" />
-    <detail-bottom-bar />
+    <back-top @click.native="backTop" v-show="isShowBackTop" />
+    <detail-bottom-bar @addToCart="addToCart" />
   </div>
 </template>
 
@@ -29,10 +29,10 @@
   import DetailBottomBar from "./childComps/DetailBottomBar";
 
   import Scroll from "components/common/scroll/Scroll";
-  import BackTop from "components/content/backtop/BackTop";
 
   import {getDetail, Goods, Shop, GoodsParam, getRecommend} from "network/detail";
   import {debounce} from "common/utils";
+  import {backTopMixin} from 'common/mixin';
 
   export default {
     name: "Detail",
@@ -46,9 +46,9 @@
       DetailParamInfo,
       DetailCommentInfo,
       DetailRecommendInfo,
-      DetailBottomBar,
-      BackTop
+      DetailBottomBar
     },
+    mixins: [backTopMixin],
     data() {
       return {
         iid: null,
@@ -61,8 +61,7 @@
         recommends: [],
         themeTopYs: [],
         getThemeTopY: null,
-        currentIndex: 0,
-        isShowBackTop: false
+        currentIndex: 0
       }
     },
     created() {
@@ -115,22 +114,31 @@
       titleClick(index) {
         this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 200)
       },
-      backClick() {
-        // 返回顶部
-        this.$refs.scroll.scrollTo(0, 0)
-      },
       contentScroll(position) {
         let positionY = -position.y
         let length = this.themeTopYs.length
         for (let i = 0; i < length - 1; i ++) {
-          if (this.currentIndex !==i && (positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i + 1])) {
+          if (this.currentIndex !== i && (positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i + 1])) {
             this.currentIndex = i
             this.$refs.navbar.currentIndex = this.currentIndex
           }
         }
 
         // 判断是否显示BackTop
-        this.isShowBackTop = (-position.y) > 1000
+        this.listenShowBackTop(position)
+      },
+      addToCart() {
+        // 获取购物车需要展示的信息
+        let product = {}
+        product.image = this.topImages[0]
+        product.title = this.goods.title
+        product.desc = this.goods.desc
+        product.price = this.goods.realPrice
+        product.iid = this.iid
+        product.count = 0
+
+        // 将商品添加到购物车
+        this.$store.dispatch('addCart', product)
       }
     }
   }
@@ -145,6 +153,6 @@
   }
 
   .content {
-    height: calc(100% - 44px);
+    height: calc(100% - 93px);
   }
 </style>
