@@ -34,6 +34,8 @@
   import {debounce} from "common/utils";
   import {backTopMixin} from 'common/mixin';
 
+  import {mapActions} from 'vuex';
+
   export default {
     name: "Detail",
     components: {
@@ -106,6 +108,7 @@
       }, 100)
     },
     methods: {
+      ...mapActions(['addCart']),
       imageLoad() {
         this.$refs.scroll.refresh()
 
@@ -138,7 +141,9 @@
         product.count = 0
 
         // 将商品添加到购物车
-        this.$store.dispatch('addCart', product)
+        this.addCart(product).then(res => {
+          this.$toast.show(res)
+        })
       }
     }
   }
