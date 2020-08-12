@@ -50,7 +50,10 @@
         }
       },
       calcClick() {
-        if (this.checkLength === 0) {
+        if (this.cartList.length === 0) {
+          this.$toast.show('购物车为空，请添加商品')
+        }
+        else if (this.checkLength === 0) {
           this.$toast.show('请选择购买的商品')
         }
       }
