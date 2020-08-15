@@ -10,6 +10,7 @@
 
 <script>
   import NavBar from "components/common/navbar/NavBar";
+
   import CartList from "./childComps/CartList";
   import CartBottomBar from "./childComps/CartBottomBar";
 

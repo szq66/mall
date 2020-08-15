@@ -36,7 +36,7 @@
 
   import {getHomeMultidata, getHomeGoods} from 'network/home'
   import {debounce} from "common/utils";
-  import {backTopMixin} from "common/mixin";
+  import {backTopMixin, tabControlMixin} from "common/mixin";
 
   export default {
     name: 'Home',
@@ -58,13 +58,12 @@
           'new': {page: 0, list: []},
           'sell': {page: 0, list: []}
         },
-        currentType: 'pop',
         tabOffsetTop: 0,
         isTabFixed: false,
         saveY: 0
       }
     },
-    mixins: [backTopMixin],
+    mixins: [backTopMixin, tabControlMixin],
     computed: {
       showGoods() {
         return this.goods[this.currentType].list
@@ -94,21 +93,6 @@
       /**
        * 事件监听相关的方法
        */
-      tabClick(index) {
-        switch (index) {
-          case 0:
-          this.currentType = 'pop'
-          break
-          case 1:
-          this.currentType = 'new'
-          break
-          case 2:
-          this.currentType = 'sell'
-          break
-        }
-        this.$refs.tabControl1.currentIndex = index
-        this.$refs.tabControl2  .currentIndex = index
-      },
       contentScroll(position) {
         // 判断BackTop是否显示
         this.listenShowBackTop(position)

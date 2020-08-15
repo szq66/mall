@@ -31,6 +31,7 @@
 
 <script>
   import NavBar from "components/common/navbar/NavBar";
+
   import UserInfo from "./childComps/UserInfo";
   import ListView from "./childComps/ListView";
 
