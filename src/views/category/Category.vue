@@ -1,5 +1,5 @@
 <template>
-  <div class="category">
+  <div id="category">
     <nav-bar class="nav-bar">
       <div slot="center">商品分类</div>
     </nav-bar>
