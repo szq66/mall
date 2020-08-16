@@ -10,31 +10,31 @@
 </template>
 
 <script>
-export default {
-  name: 'GoodsListItem',
-  props: {
-		goodsItem: {
-			type: Object,
-			default() {
-				return {}
-			}
-		}
-  },
-  computed: {
-    showImage() {
-      return this.goodsItem.image || this.goodsItem.show.img
-    }
-  },
-  methods: {
-    // 监听图片加载完成
-    imageLoad() {
-      this.$bus.$emit('itemImageLoad')
+  export default {
+    name: 'GoodsListItem',
+    props: {
+      goodsItem: {
+        type: Object,
+        default() {
+          return {}
+        }
+      }
     },
-    itemClick() {
-      this.$router.push('/detail/' + this.goodsItem.iid)
+    computed: {
+      showImage() {
+        return this.goodsItem.image || this.goodsItem.show.img || this.goodsItem.img
+      }
+    },
+    methods: {
+      // 监听图片加载完成
+      imageLoad() {
+        this.$bus.$emit('itemImageLoad')
+      },
+      itemClick() {
+        this.$router.push('/detail/' + this.goodsItem.iid)
+      }
     }
   }
-}
 </script>
 
 <style scoped>

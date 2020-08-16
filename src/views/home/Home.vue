@@ -35,8 +35,7 @@
   import Scroll from 'components/common/scroll/Scroll'
 
   import {getHomeMultidata, getHomeGoods} from 'network/home'
-  import {debounce} from "common/utils";
-  import {backTopMixin, tabControlMixin} from "common/mixin";
+  import {itemListenerMixin, backTopMixin, tabControlMixin} from "common/mixin";
 
   export default {
     name: 'Home',
@@ -63,7 +62,7 @@
         saveY: 0
       }
     },
-    mixins: [backTopMixin, tabControlMixin],
+    mixins: [itemListenerMixin, backTopMixin, tabControlMixin],
     computed: {
       showGoods() {
         return this.goods[this.currentType].list
@@ -81,13 +80,8 @@
     },
     deactivated() {
       this.saveY = this.$refs.scroll.getScrollY()
-    },
-    mounted() {
-      // 监听item中的图片加载事件
-      const refresh = debounce(this.$refs.scroll.refresh, 50)
-      this.$bus.$on('itemImageLoad', () => {
-        refresh()
-      })
+
+      this.$bus.$off('itemImageLoad', this.itemImgListener)
     },
     methods: {
       /**

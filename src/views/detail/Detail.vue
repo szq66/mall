@@ -32,7 +32,7 @@
 
   import {getDetail, Goods, Shop, GoodsParam, getRecommend} from "network/detail";
   import {debounce} from "common/utils";
-  import {backTopMixin} from 'common/mixin';
+  import {itemListenerMixin, backTopMixin} from 'common/mixin';
 
   import {mapActions} from 'vuex';
 
@@ -50,7 +50,7 @@
       DetailRecommendInfo,
       DetailBottomBar
     },
-    mixins: [backTopMixin],
+    mixins: [itemListenerMixin, backTopMixin],
     data() {
       return {
         iid: null,
@@ -145,6 +145,9 @@
           this.$toast.show(res)
         })
       }
+    },
+    destroyed() {
+      this.$bus.$off('itemImageLoad', this.itemImgListener)
     }
   }
 </script>

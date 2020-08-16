@@ -1,3 +1,20 @@
+import {debounce} from "./utils";
+export const itemListenerMixin = {
+  data() {
+    return {
+      itemImgListener: null
+    }
+  },
+  mounted() {
+    // 监听item中的图片加载事件
+    const refresh = debounce(this.$refs.scroll.refresh, 50)
+    this.itemImgListener = () => {
+      refresh()
+    }
+    this.$bus.$on('itemImageLoad', this.itemImgListener)
+  },
+}
+
 import BackTop from "components/content/backtop/BackTop";
 export const backTopMixin = {
   components: {
