@@ -6,6 +6,7 @@
     <div class="content">
       <tab-menu :categories="categories" @selectItem="selectItem" />
       <scroll class="tab-content">
+        <tab-content-category :subcategories="showSubcategory" />
         <tab-control :titles="['综合', '新品', '销量']"
                      @itemClick="tabClick" />
         <tab-content-detail :category-detail="showCategoryDetail" />
@@ -20,6 +21,7 @@
   import TabMenu from "./childComps/TabMenu";
   import TabControl from "components/content/tabControl/TabControl";
   import Scroll from "components/common/scroll/Scroll";
+  import TabContentCategory from "./childComps/TabContentCategory";
   import TabContentDetail from "./childComps/TabContentDetail";
 
   import {getCategory, getSubcategory, getCategoryDetail} from "network/category";
@@ -32,6 +34,7 @@
       TabMenu,
       TabControl,
       Scroll,
+      TabContentCategory,
       TabContentDetail
     },
     data() {
@@ -104,7 +107,6 @@
        */
       selectItem(index) {
         this.getSubcategory(index)
-        console.log(index);
       }
     }
   }
@@ -135,5 +137,7 @@
   .tab-content {
     flex: 1;
     height: 100%;
+
+    overflow: hidden;
   }
 </style>

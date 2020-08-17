@@ -12,7 +12,7 @@ export const itemListenerMixin = {
       refresh()
     }
     this.$bus.$on('itemImageLoad', this.itemImgListener)
-  },
+  }
 }
 
 import BackTop from "components/content/backtop/BackTop";
