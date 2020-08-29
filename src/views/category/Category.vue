@@ -5,12 +5,13 @@
     </nav-bar>
     <div class="content">
       <tab-menu :categories="categories" @selectItem="selectItem" />
-      <scroll class="tab-content">
+      <scroll class="tab-content" ref="scroll" @scroll="contentScroll">
         <tab-content-category :subcategories="showSubcategory" />
         <tab-control :titles="['综合', '新品', '销量']"
                      @itemClick="tabClick" />
         <tab-content-detail :category-detail="showCategoryDetail" />
       </scroll>
+      <back-top @click.native="backTop" v-show="isShowBackTop" />
     </div>
   </div>
 </template>
@@ -25,7 +26,7 @@
   import TabContentDetail from "./childComps/TabContentDetail";
 
   import {getCategory, getSubcategory, getCategoryDetail} from "network/category";
-  import {tabControlMixin} from "common/mixin";
+  import {tabControlMixin, backTopMixin} from "common/mixin";
 
   export default {
     name: 'Category',
@@ -44,7 +45,7 @@
         currentIndex: -1
       }
     },
-    mixins: [tabControlMixin],
+    mixins: [tabControlMixin, backTopMixin],
     created() {
       this.getCategory()
     },
@@ -107,6 +108,10 @@
        */
       selectItem(index) {
         this.getSubcategory(index)
+      },
+      contentScroll(position) {
+        // 判断BackTop是否显示
+        this.listenShowBackTop(position)
       }
     }
   }

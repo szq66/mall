@@ -25,16 +25,16 @@
 </template>
 
 <script>
-  import HomeSwiper from './childComps/HomeSwiper'
-  import RecommendView from './childComps/RecommendView'
-  import FeatureView from './childComps/FeatureView'
+  import HomeSwiper from './childComps/HomeSwiper';
+  import RecommendView from './childComps/RecommendView';
+  import FeatureView from './childComps/FeatureView';
 
-  import NavBar from 'components/common/navbar/NavBar'
-  import TabControl from 'components/content/tabControl/TabControl'
-  import GoodsList from 'components/content/goods/GoodsList'
-  import Scroll from 'components/common/scroll/Scroll'
+  import NavBar from 'components/common/navbar/NavBar';
+  import TabControl from 'components/content/tabControl/TabControl';
+  import GoodsList from 'components/content/goods/GoodsList';
+  import Scroll from 'components/common/scroll/Scroll';
 
-  import {getHomeMultidata, getHomeGoods} from 'network/home'
+  import {getHomeMultidata, getHomeGoods} from 'network/home';
   import {itemListenerMixin, backTopMixin, tabControlMixin} from "common/mixin";
 
   export default {

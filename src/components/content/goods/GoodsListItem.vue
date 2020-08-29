@@ -22,7 +22,10 @@
     },
     computed: {
       showImage() {
-        return this.goodsItem.image || this.goodsItem.show.img || this.goodsItem.img
+        if (this.goodsItem.img)
+          return  this.goodsItem.img
+        else
+          return this.goodsItem.image || this.goodsItem.show.img
       }
     },
     methods: {
