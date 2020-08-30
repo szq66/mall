@@ -14,7 +14,7 @@
 				type: Array,
 				default() {
 					return []
-				} 
+				}
 			}
 		},
 		data() {
@@ -24,7 +24,7 @@
 		},
 		methods: {
 			itemClick(index) {
-				this.currentIndex = index;
+				this.currentIndex = index
 				this.$emit('tabClick', index)
 			}
 		}

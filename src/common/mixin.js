@@ -56,7 +56,7 @@ export const tabControlMixin = {
           break
       }
       this.$refs.tabControl1.currentIndex = index
-      this.$refs.tabControl2  .currentIndex = index
+      this.$refs.tabControl2.currentIndex = index
     }
   }
 }

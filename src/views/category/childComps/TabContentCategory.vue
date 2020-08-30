@@ -3,7 +3,7 @@
     <grid-view :cols="3" :lineSpace="15" :v-margin="20" v-if="subcategories.list">
       <div class="item" v-for="(item, index) in subcategories.list" :key="index">
         <a :href="item.link">
-          <img class="item-img" v-lazy="item.image" alt="">
+          <img class="item-img" v-lazy="item.image" alt="" @load="imageLoad">
           <div class="item-text">{{item.title}}</div>
         </a>
       </div>
@@ -24,6 +24,20 @@
         type: Object,
         default() {
           return []
+        }
+      }
+    },
+    data() {
+      return {
+        isLoad: false
+      }
+    },
+    methods: {
+      imageLoad() {
+        // 发射一次就行
+        if (!this.isLoad) {
+          this.$emit('contentCategoryLoad')
+          this.isLoad = true
         }
       }
     }

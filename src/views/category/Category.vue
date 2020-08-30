@@ -5,14 +5,20 @@
     </nav-bar>
     <div class="content">
       <tab-menu :categories="categories" @selectItem="selectItem" />
-      <scroll class="tab-content" ref="scroll" @scroll="contentScroll">
-        <tab-content-category :subcategories="showSubcategory" />
+      <tab-control :titles="['综合', '新品', '销量']"
+                   @tabClick="tabClick"
+                   v-show="isTabFixed"
+                   ref="tabControl1"
+                   class="tab-control" />
+      <scroll class="tab-content" ref="scroll" :probe-type="3" @scroll="contentScroll">
+        <tab-content-category :subcategories="showSubcategory" @contentCategoryLoad="contentCategoryLoad" />
         <tab-control :titles="['综合', '新品', '销量']"
-                     @itemClick="tabClick" />
+                     @tabClick="tabClick"
+                     ref="tabControl2" />
         <tab-content-detail :category-detail="showCategoryDetail" />
       </scroll>
-      <back-top @click.native="backTop" v-show="isShowBackTop" />
     </div>
+    <back-top @click.native="backTop" v-show="isShowBackTop" />
   </div>
 </template>
 
@@ -42,7 +48,9 @@
       return {
         categories: [],
         categoryData: {},
-        currentIndex: -1
+        curIndex: -1,
+        tabOffsetTop: 0,
+        isTabFixed: false
       }
     },
     mixins: [tabControlMixin, backTopMixin],
@@ -51,12 +59,12 @@
     },
     computed: {
       showSubcategory() {
-        if (this.currentIndex === -1) return {}
-        return this.categoryData[this.currentIndex].subcategories
+        if (this.curIndex === -1) return {}
+        return this.categoryData[this.curIndex].subcategories
       },
       showCategoryDetail() {
-        if (this.currentIndex === -1) return []
-        return this.categoryData[this.currentIndex].categoryDetail[this.currentType]
+        if (this.curIndex === -1) return []
+        return this.categoryData[this.curIndex].categoryDetail[this.currentType]
       }
     },
     methods: {
@@ -83,7 +91,7 @@
         })
       },
       getSubcategory(index) {
-        this.currentIndex = index;
+        this.curIndex = index;
         const mailKey = this.categories[index].maitKey;
         getSubcategory(mailKey).then(res => {
           this.categoryData[index].subcategories = res.data
@@ -95,11 +103,11 @@
       },
       getCategoryDetail(type) {
         // 1.获取请求的miniWallkey
-        const miniWallkey = this.categories[this.currentIndex].miniWallkey;
+        const miniWallkey = this.categories[this.curIndex].miniWallkey;
         // 2.发送请求,传入miniWallkey和type
         getCategoryDetail(miniWallkey, type).then(res => {
           // 3.将获取的数据保存下来
-          this.categoryData[this.currentIndex].categoryDetail[type] = res
+          this.categoryData[this.curIndex].categoryDetail[type] = res
           this.categoryData = {...this.categoryData}
         })
       },
@@ -112,6 +120,14 @@
       contentScroll(position) {
         // 判断BackTop是否显示
         this.listenShowBackTop(position)
+
+        // 决定TabControl是否吸顶(position: fixed)
+        this.isTabFixed = (-position.y) > this.tabOffsetTop
+      },
+      contentCategoryLoad() {
+        // 获取tabControl的offsetTop
+        // 所有组件都有一个属性$el用于获取组件中的元素
+        this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
       }
     }
   }
@@ -125,6 +141,11 @@
   .nav-bar {
     background-color: var(--color-tint);
     color: white;
+  }
+
+  .tab-control {
+    position: relative;
+    z-index: 9;
   }
 
   .content {

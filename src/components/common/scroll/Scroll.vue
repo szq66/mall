@@ -19,11 +19,11 @@ export default {
   props: {
     probeType: {
       type: Number,
-      dafault: 0
+      default: 0
     },
     pullUpLoad: {
       type: Boolean,
-      dafault: false
+      default: false
     }
   },
   mounted() {
