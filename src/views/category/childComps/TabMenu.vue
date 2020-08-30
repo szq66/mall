@@ -51,8 +51,8 @@
   }
 
   .menu-list-item {
-    height: 45px;
-    line-height: 45px;
+    height: 40px;
+    line-height: 40px;
     text-align: center;
     font-size: 14px;
   }

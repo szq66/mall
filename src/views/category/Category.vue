@@ -3,13 +3,14 @@
     <nav-bar class="nav-bar">
       <div slot="center">商品分类</div>
     </nav-bar>
+    <tab-control :titles="['综合', '新品', '销量']"
+                 @tabClick="tabClick"
+                 v-show="isTabFixed"
+                 ref="tabControl1"
+                 class="tab-control"
+                 :style="getStyles()" />
     <div class="content">
       <tab-menu :categories="categories" @selectItem="selectItem" />
-      <tab-control :titles="['综合', '新品', '销量']"
-                   @tabClick="tabClick"
-                   v-show="isTabFixed"
-                   ref="tabControl1"
-                   class="tab-control" />
       <scroll class="tab-content" ref="scroll" :probe-type="3" @scroll="contentScroll">
         <tab-content-category :subcategories="showSubcategory" @contentCategoryLoad="contentCategoryLoad" />
         <tab-control :titles="['综合', '新品', '销量']"
@@ -68,6 +69,10 @@
       }
     },
     methods: {
+      getStyles() {
+        if (this.isTabFixed)
+          return {left: '89px', width: 'calc(100% - 89px)'}
+      },
       /**
        * 网络请求相关的方法
        */
@@ -146,6 +151,7 @@
   .tab-control {
     position: relative;
     z-index: 9;
+    /*left: 100px;*/
   }
 
   .content {

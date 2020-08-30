@@ -27,18 +27,9 @@
         }
       }
     },
-    data() {
-      return {
-        isLoad: false
-      }
-    },
     methods: {
       imageLoad() {
-        // 发射一次就行
-        if (!this.isLoad) {
-          this.$emit('contentCategoryLoad')
-          this.isLoad = true
-        }
+        this.$emit('contentCategoryLoad')
       }
     }
   }
