@@ -151,7 +151,6 @@
   .tab-control {
     position: relative;
     z-index: 9;
-    /*left: 100px;*/
   }
 
   .content {
