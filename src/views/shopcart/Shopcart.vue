@@ -3,7 +3,7 @@
     <nav-bar class="nav-bar">
       <div slot="center">购物车({{cartLength}})</div>
     </nav-bar>
-    <div class="null" v-if="cartLength == 0">你的购物车空空如也</div>
+    <div class="null" v-if="cartLength === 0">你的购物车空空如也</div>
     <cart-list v-else />
     <cart-bottom-bar />
   </div>
