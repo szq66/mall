@@ -101,11 +101,11 @@
 
       this.getThemeTopY = debounce(() => {
         this.themeTopYs.push(0)
-        this.themeTopYs.push(this.$refs.params.$el.offsetTop -44)
-        this.themeTopYs.push(this.$refs.comment.$el.offsetTop -44)
-        this.themeTopYs.push(this.$refs.recommend.$el.offsetTop -44)
+        this.themeTopYs.push(this.$refs.params.$el.offsetTop - 44)
+        this.themeTopYs.push(this.$refs.comment.$el.offsetTop - 44)
+        this.themeTopYs.push(this.$refs.recommend.$el.offsetTop - 44)
         this.themeTopYs.push(Number.MAX_VALUE)
-      }, 100)
+      }, 1000)
     },
     methods: {
       ...mapActions(['addCart']),
